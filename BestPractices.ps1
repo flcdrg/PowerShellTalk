@@ -1,32 +1,72 @@
-﻿Set-StrictMode -Version 4
-
-# Best Practices
+﻿# Best Practices
 
 # Before
-function DestroyZombies($name)
+function DestroyZombies($name, $force)
 {
-    Get-Process $name | Stop-Process
+    if ($force -eq $true)
+    {
+        Get-Process $name | Stop-Process
+    } 
+    else 
+    {
+        Get-Process $name | Stop-Process
+    }
 }
 
 
+
+Set-StrictMode -Version 4
+
 # After
+<#
+.SYNOPSIS 
+Stop zombie processes
+
+.DESCRIPTION
+Search for named processes to stop, or stop all processes
+
+.PARAMETER Name
+Specifies one or more process names
+
+.PARAMETER All
+Specifies the extension. "Txt" is the default.
+
+#>
 function Stop-Zombies
 {
 [CmdletBinding(SupportsShouldProcess = $true)]
     param(
-        [string] $name
+        
+        [Parameter(Mandatory=$true, ParameterSetName = "Named", HelpMessage="Enter name of zombie process")]
+        [ValidateNotNullOrEmpty()]
+        [string] $Name,
+
+        [Parameter(ParameterSetName = "All")]
+        [switch] $All,
+
+        [switch] $Force = $false
     )
 
-    if ($ConfirmPreference)
+    Begin
     {
+        $count = 0
     }
 
-    $ConfirmPreference
-
-    if ($WhatIfPreference)
+    Process
     {
-
+        $candidates = @(Get-Process | Where { $All.IsPresent -or $_.Name -eq $Name })        
+        
+        $candidates | Where-Object { $PSCmdlet.ShouldProcess($_.Name, "Stop-Process") } | ForEach-Object { 
+            Write-Host "$_ $Force" 
+            $count++
+            Write-Progress -Activity "Stopping" -PercentComplete ($count / $candidates.Count * 100)
+        }
     }
-
-    $WhatIfPreference.IsPresent
+    
+    End
+    {
+        Write-Output "Stopped $count zombies"
+    }   
 }
+
+Stop-Zombies -WhatIf -All
