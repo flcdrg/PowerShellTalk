@@ -6,6 +6,12 @@ $i = 3
 $a = "a", "b"
 $d = @{a = 1; b = 2}
 
+
+[int]$i = "blah"
+
+
+
+
 # Conditionals
 1 -lt 2
 5 -eq 5
@@ -28,6 +34,10 @@ switch (4, 2)
     3 {"Three again."}
 }  
 
+
+
+
+
 # Loops
 for ($i = 0; $i -lt 10; $i++)
 {
@@ -45,6 +55,8 @@ while ($i -gt 0)
     $i --
 }
 
+
+
 # Pipeline
 1..10 | Write-Output
 10..1 | Sort-Object
@@ -52,6 +64,12 @@ while ($i -gt 0)
 Get-ChildItem C:\Windows | Where-Object -Property CreationTime -gt -Value "2014-01-01" | Select-Object -First 10
 
 Get-ChildItem C:\Windows | Select-Object -First 10 -Property Name #-ExpandProperty Name
+
+# back to slides
+
+
+
+
 
 # functions
 function One
@@ -98,4 +116,5 @@ Get-ExecutionPolicy
 
 . .\DotSource.ps1
 
-#
+# Providers
+Get-PSProvider

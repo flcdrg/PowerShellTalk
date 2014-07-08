@@ -2,14 +2,14 @@
 
 Configuration MyWebConfig
 {
-   Node "Server001"
+   Node "clarabel"
    {
       File MyFileExample
       {
          Ensure = "Present" 
          Type = "Directory“ 
          Recurse = $true
-         SourcePath = "c:\windows\temp"
+         SourcePath = "c:\tmp\wix"
          DestinationPath = "C:\inetpub\newweb"
       }
    }

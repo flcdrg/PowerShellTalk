@@ -37,3 +37,7 @@ Icon
 
 Bin
 Obj
+
+*.mof
+*.suo
+*.v12.suo
