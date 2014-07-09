@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation;
+using System.Management.Automation.Runspaces;
 using System.Text;
 
 namespace HostingSimple
@@ -26,7 +28,7 @@ namespace HostingSimple
             // display results
 
             #region Here's one we prepared earlier
-#if false
+
             var runspace = RunspaceFactory.CreateRunspace();
             runspace.Open();
             PowerShell psh = PowerShell.Create();
@@ -40,7 +42,7 @@ namespace HostingSimple
             {
                 Console.WriteLine(r.BaseObject);
             }
-#endif
+
             #endregion
             Console.ReadLine();
         }

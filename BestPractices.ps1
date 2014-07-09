@@ -5,7 +5,7 @@ function DestroyZombies($name, $force)
 {
     if ($force -eq $true)
     {
-        Get-Process $name | Stop-Process
+        Get-Process $name | Stop-Process -force
     } 
     else 
     {
@@ -60,6 +60,7 @@ function Stop-Zombies
             Write-Host "$_ $Force" 
             $count++
             Write-Progress -Activity "Stopping" -PercentComplete ($count / $candidates.Count * 100)
+            sleep 1
         }
     }
     
